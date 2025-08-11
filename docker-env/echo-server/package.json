@@ -1,7 +1,0 @@
-{
-  "name": "echo-server",
-  "version": "1.0.0",
-  "dependencies": {
-    "laravel-echo-server": "^1.9.0"
-  }
-}

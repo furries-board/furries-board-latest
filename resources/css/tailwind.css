@@ -1,15 +1,14 @@
 @layer tailwind-base, primevue, tailwind-utilities;
 
 @layer tailwind-base {
-	@tailwind base;
+  @tailwind base;
 }
 
 @layer tailwind-utilities {
-	@tailwind components;
-	@tailwind utilities;
+  @tailwind components;
+  @tailwind utilities;
 }
 
-
 [x-cloak] {
-	display: none;
+  display: none;
 }

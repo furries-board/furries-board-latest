@@ -12,45 +12,45 @@ import '../css/tailwind.css';
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
-    interface ImportMetaEnv {
-        readonly VITE_APP_NAME: string;
-        [key: string]: string | boolean | undefined;
-    }
+  interface ImportMetaEnv {
+    readonly VITE_APP_NAME: string;
+    [key: string]: string | boolean | undefined;
+  }
 
-    interface ImportMeta {
-        readonly env: ImportMetaEnv;
-        readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>;
-    }
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+    readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>;
+  }
 }
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.vue`,
-            import.meta.glob<DefineComponent>('./Pages/**/*.vue'),
-        ),
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(PrimeVue, {
-                theme: {
-                    preset: Aura,
-                    options: {
-                        prefix: 'p',
-                        darkModeSelector: false,
-                        cssLayer: {
-                            name: 'primevue',
-                            order: 'tailwind-utilities, tailwind-base, primevue',
-                        },
-                    },
-                },
-                ripple: true,
-            })
-            .use(ZiggyVue)
-            .use(Lang)
-            .mount(el);
-    },
+  title: (title) => `${title} - ${appName}`,
+  resolve: (name) =>
+    resolvePageComponent(
+      `./Pages/${name}.vue`,
+      import.meta.glob<DefineComponent>('./Pages/**/*.vue'),
+    ),
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .use(PrimeVue, {
+        theme: {
+          preset: Aura,
+          options: {
+            prefix: 'p',
+            darkModeSelector: false,
+            cssLayer: {
+              name: 'primevue',
+              order: 'tailwind-utilities, tailwind-base, primevue',
+            },
+          },
+        },
+        ripple: true,
+      })
+      .use(ZiggyVue)
+      .use(Lang)
+      .mount(el);
+  },
 });

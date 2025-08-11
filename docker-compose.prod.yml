@@ -1,29 +1,20 @@
 services:
-    nginx:
-        container_name: furries-board-nginx
-        image: nginx:alpine
-        ports:
-            - '8081:80'
-            - '8443:443'
-        volumes:
-            - ./public:/var/www/html/public
-            - ./docker-env/nginx/default.conf:/etc/nginx/conf.d/default.conf
-            - ./docker-env/nginx/certs:/etc/nginx/certs # 放 ssl 憑證的地方
-        depends_on:
-            - php
-        environment:
-            - TZ=Asia/Taipei
+  php-fpm:
+    build:
+      dockerfile: docker-env/prod/php-fpm.Dockerfile
+    volumes:
+      - .:/var/www/html
+    expose:
+      - '9000'
 
-    # php-fpm
-    php:
-        container_name: furries-board-php
-        build:
-            dockerfile: ./app.Dockerfile
-        volumes:
-            - .:/var/www/html
-            - ./docker-env/php.ini:/usr/local/etc/php/php.ini
-        expose:
-            - '9000'
-            - '9003'
-        environment:
-            - TZ=Asia/Taipei
+  nginx:
+    build:
+      context: .
+      dockerfile: docker-env/prod/nginx.Dockerfile
+    volumes:
+      - ./public:/var/www/html/public
+    ports:
+      - '8081:80'
+      - '8443:443'
+    depends_on:
+      - php-fpm
